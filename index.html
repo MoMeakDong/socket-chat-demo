@@ -21,26 +21,19 @@
     </form>
   </body>
   <body>
-  <script src="/socket.io/socket.io.js"></script>
-  <script>
-    var socket = io();
-    var messages = document.getElementById('messages');
-    var form = document.getElementById('form');
-    var input = document.getElementById('input');
-    
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
-      if (input.value) {
-        socket.emit('chat message', input.value);
-        input.value = '';
-      }
-    });
-    
-    socket.on('chat message', function(msg) {
-      var item = document.createElement('li');
-      item.textContent = msg;
-      messages.appendChild(item);
-      window.scrollTo(0, document.body.scrollHeight);
-    });
-  </script>
+    <script src = "/socket.io/socket.io.js"></script>
+   <script>
+      var socket = io();
+      socket.on('testerEvent', function(data){
+        console.log('default: ', data)
+        document.write(data)
+      });
+
+      var socketNsp = io('/my-namespace');
+      socketNsp.on('hi',function(data) {
+        console.log('my-namespace: ', data)
+         document.body.innerHTML = '';
+         document.write(data);
+      });
+   </script>
 </html>
